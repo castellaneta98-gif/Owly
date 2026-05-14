@@ -3,8 +3,8 @@ class BookServiceClass {
         if (BookServiceClass.instance) {
             return BookServiceClass.instance;
         }
-        this.baseSubjectUrl = 'http://openlibrary.org/subjects';
-        this.baseWorkUrl = 'http://openlibrary.org';
+        this.baseSubjectUrl = 'https://openlibrary.org/subjects';
+        this.baseWorkUrl = 'https://openlibrary.org';
         BookServiceClass.instance = this;
     }
 
