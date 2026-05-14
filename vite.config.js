@@ -13,15 +13,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    minify: 'terser',
-    target: 'es2015',
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['src/BookService.js']
-        }
-      }
-    }
+    target: 'es2015'
   },
 
   // Alias per import più puliti
