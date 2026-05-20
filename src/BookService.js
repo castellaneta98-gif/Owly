@@ -19,7 +19,7 @@ class BookServiceClass {
             const data = await response.json();
             return data.works.map(book => ({
                 title: book.title,
-                authors : book.authors.map(author => author.name).join(', ') || 'Autore sconosciuto',
+                authors :book.authors?.map(author => author.name).join(', ') || 'Autore sconosciuto',
                 key: book.key
             }));
         } catch (error) {
