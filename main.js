@@ -48,6 +48,13 @@ resultsGrid.addEventListener('click', async (event) => {
     if (event.target.classList.contains('details-btn')) {
         const bookKey = event.target.getAttribute('data-key');
         const descContainer = event.target.parentElement.querySelector('.description');
+        
+        // Toggle: se i dettagli sono già visibili, nascondili
+        if (descContainer.innerHTML.trim() && !descContainer.innerHTML.includes('Caricamento')) {
+            descContainer.innerHTML = '';
+            return;
+        }
+        
         descContainer.innerHTML = '<p>Caricamento descrizione...</p>';
         const description = await BookService.getBookDescription(bookKey);
         descContainer.innerHTML = `<p class="fade-in">${description}</p>`;
