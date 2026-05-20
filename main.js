@@ -27,15 +27,17 @@ async function handleGenreSearch() {
         `;
         resultsGrid.appendChild(bookCard);
     });
-    resultsGrid.addEventListener('click', async (event) => {
-        if (event.target.classList.contains('details-btn')) {
-            const bookKey = event.target.getAttribute('data-key');
-            const descContainer = event.target.parentElement.querySelector('.description');
-            descContainer.innerHTML = '<p>Caricamento descrizione...</p>';
-            const description = await BookService.getBookDescription(bookKey);
-            descContainer.innerHTML = `<p class="fade-in">${description}</p>`;
-        }
-    });
 }
+
+// Listener globale per i click sui bottoni "Dettagli"
+resultsGrid.addEventListener('click', async (event) => {
+    if (event.target.classList.contains('details-btn')) {
+        const bookKey = event.target.getAttribute('data-key');
+        const descContainer = event.target.parentElement.querySelector('.description');
+        descContainer.innerHTML = '<p>Caricamento descrizione...</p>';
+        const description = await BookService.getBookDescription(bookKey);
+        descContainer.innerHTML = `<p class="fade-in">${description}</p>`;
+    }
+});
 
 searchButton.addEventListener('click', handleGenreSearch);
