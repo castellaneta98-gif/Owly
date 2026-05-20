@@ -15,7 +15,7 @@ async function handleGenreSearch() {
         const books = await BookService.getBooksBySubject(genre);
         
         if (books.length === 0) {
-            resultsGrid.innerHTML = '<p>✓ Genere trovato ma nessun libro disponibile.</p>';
+            resultsGrid.innerHTML = '<p> Nessun libro disponibile per questo genere.</p>';
             return;
         }
         
