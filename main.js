@@ -6,7 +6,7 @@ const resultsGrid = document.querySelector('#results-grid');
 async function handleGenreSearch() {
     const genre = input.value.trim();
     if (!genre) {
-        alert('Per favore, inserisci un genere valido.');
+        resultsGrid.innerHTML = '<p>Per favore, inserisci un genere valido.</p>';
         return;
     }
     resultsGrid.innerHTML = '<p>Caricamento libri...</p>';
