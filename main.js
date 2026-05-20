@@ -41,3 +41,8 @@ resultsGrid.addEventListener('click', async (event) => {
 });
 
 searchButton.addEventListener('click', handleGenreSearch);
+input.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        handleGenreSearch();
+    }
+});
