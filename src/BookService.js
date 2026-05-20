@@ -14,7 +14,10 @@ class BookServiceClass {
             const formattedSubject = subject.toLowerCase().replace(/\s+/g, '_');
             const response = await fetch(`${this.baseSubjectUrl}/${formattedSubject}.json?limit=12`);
             if (!response.ok) {
-                throw new Error(`Genere non trovato: ${response.status}`);
+                if (response.status === 404) {
+                    throw new Error(`GENERE_NON_TROVATO`);
+                }
+                throw new Error(`ERRORE_RETE: ${response.status}`);
             }
             const data = await response.json();
             return data.works.map(book => ({
@@ -24,7 +27,7 @@ class BookServiceClass {
             }));
         } catch (error) {
             console.error('Error fetching books by subject:', error);
-            return [];
+            throw error;
         }
     }
 

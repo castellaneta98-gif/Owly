@@ -10,23 +10,37 @@ async function handleGenreSearch() {
         return;
     }
     resultsGrid.innerHTML = '<p>Caricamento libri...</p>';
-    const books = await BookService.getBooksBySubject(genre);
-    if (books.length === 0) {
-        resultsGrid.innerHTML = '<p>Nessun libro trovato per questo genere.</p>';
-        return;
+    
+    try {
+        const books = await BookService.getBooksBySubject(genre);
+        
+        if (books.length === 0) {
+            resultsGrid.innerHTML = '<p>✓ Genere trovato ma nessun libro disponibile.</p>';
+            return;
+        }
+        
+        resultsGrid.innerHTML = '';
+        books.forEach(book => {
+            const bookCard = document.createElement('div');
+            bookCard.classList.add('book-card');
+            bookCard.innerHTML = `
+                <h3>${book.title}</h3>
+                <p><strong>Autore:</strong> ${book.authors}</p>
+                <button class="details-btn" data-key="${book.key}">Dettagli</button>
+                <div class="description"></div>
+            `;
+            resultsGrid.appendChild(bookCard);
+        });
+    } catch (error) {
+        if (error.message === 'GENERE_NON_TROVATO') {
+            resultsGrid.innerHTML = '<p>❌ Genere non trovato. Prova un altro genere.</p>';
+        } else if (error.message.startsWith('ERRORE_RETE')) {
+            resultsGrid.innerHTML = '<p>❌ Errore di rete. Controlla la tua connessione e riprova.</p>';
+        } else {
+            resultsGrid.innerHTML = '<p>❌ Errore sconosciuto. Riprova più tardi.</p>';
+            console.error('Unexpected error:', error);
+        }
     }
-    resultsGrid.innerHTML = '';
-    books.forEach(book => {
-        const bookCard = document.createElement('div');
-        bookCard.classList.add('book-card');
-        bookCard.innerHTML = `
-            <h3>${book.title}</h3>
-            <p><strong>Autore:</strong> ${book.authors}</p>
-            <button class="details-btn" data-key="${book.key}">Dettagli</button>
-            <div class="description"></div>
-        `;
-        resultsGrid.appendChild(bookCard);
-    });
 }
 
 // Listener globale per i click sui bottoni "Dettagli"
